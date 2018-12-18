@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>RentALease</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
+</head>
+
+<body ng-app="rentaleaseApp">
+
+	<div class="container" ng-controller="rentaleaseCtrl">
+		<div class="row">
+			<div class="col-12 center-block">
+
+				<h1 class="text-center">Rent A Lease</h1>
+				<br>
+
+				<div class="row">
+
+					<div class="col-6">
+						<div class="input-group">
+							<span class="input-group-text">Search: </span>
+							<input type="text" class="form-control" placeholder="Start typing..." ng-model="searcher">
+						</div>
+					</div>
+
+					<div class="col-6">
+
+						<!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
+							Add new item
+						</button>
+
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+
+									<div class="modal-body">
+										<div class="form-group">
+											<label>Name of the product</label>
+											<input type="text" class="form-control" ng-model="item.name">
+										</div>
+										<div class="form-group">
+											<label>Description for a product</label>
+											<input type="text" class="form-control" ng-model="item.description">
+										</div>
+										<div class="form-group">
+											<label>Price</label>
+											<input type="text" class="form-control" ng-model="item.price">
+										</div>
+
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+										<button ng-click="addItem()" type="button" class="btn btn-primary">Add item</button>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<br>
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th ng-repeat="header in [
+										'Index' , 'Name' , 'Description' , 'Price' , 'Rent' , 'Delete'
+									]">
+									{{header}}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in rentalease | filter : searcher">
+								<td>{{$index}}</td>
+								<td>
+									{{item.name}}
+								</td>
+								<td>{{item.description}}</td>
+								<td>{{item.price}} $</td>
+								<td>
+									<button ng-click="lease =! lease; editItem( item._id )" class="btn btn-default btn-xs" ng-click="">Lease</button><button
+									 ng-click="" class="btn btn-warning btn-xs ml-2">terminate
+										lease</button>
+									<div ng-if="lease" id="datepickerFrom" class="input-group date" data-date-format="dd-mm-yyyy">
+										<span class="input-group-text">From: </span>
+										<input class="form-control" type="text" ng-model="item.rent_start_date" />
+										<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+									</div>
+									<div ng-if="lease" id="datepickerTo" class="input-group date" data-date-format="dd-mm-yyyy">
+										<span class="input-group-text">To: </span>
+										<input class="form-control" type="text" ng-model="item.rent_over_date" />
+										<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+									</div>
+
+									<button type="button" class="btn btn-primary float-right" ng-if="lease" ng-click="updateItem( item._id )">
+										Update
+									</button>
+
+								</td>
+
+								<td><button ng-click="deleteItem( item._id )" class="btn btn-danger btn-xs">&times;</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- ============================= JavaScript ============================= -->
+
+	<!-- AngularJS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js"></script>
+	<!-- <script src="assets/js/rentaleaseApp.js"></script> -->
+	<script src="assets/js/controllers/rentaleaseCtrl.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
+</body>
+
+</html>
